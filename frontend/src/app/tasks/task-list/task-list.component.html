@@ -1,0 +1,60 @@
+<div class="tasks-container">
+  <h2>Minhas tarefas</h2>
+  <button (click)="logout()">Logout</button>
+
+  <h3>Nova tarefa</h3>
+  <form (ngSubmit)="addTask()">
+    <input
+      [(ngModel)]="newTask.title"
+      name="title"
+      placeholder="Título"
+      required
+    />
+    <input
+      [(ngModel)]="newTask.description"
+      name="description"
+      placeholder="Descrição"
+    />
+    <button type="submit">Adicionar</button>
+  </form>
+
+  <h3>Lista de tarefas</h3>
+  <ul>
+    <li *ngFor="let task of tasks">
+      <!-- Vista normal (não está a editar) -->
+      <div *ngIf="editingTask?.id !== task.id">
+        <input
+          type="checkbox"
+          [(ngModel)]="task.done"
+          name="done-{{ task.id }}"
+          (change)="startEdit(task); saveEdit()"
+        />
+        <strong [style.text-decoration]="task.done ? 'line-through' : 'none'">
+          {{ task.title }}
+        </strong>
+        - {{ task.description }}
+        <button (click)="startEdit(task)">Editar</button>
+        <button (click)="deleteTask(task.id!)">Apagar</button>
+      </div>
+
+      <!-- Vista de edição -->
+      <div *ngIf="editingTask?.id === task.id">
+        <input [(ngModel)]="editingTask!.title" name="editTitle" />
+        <input
+          [(ngModel)]="editingTask!.description"
+          name="editDescription"
+        />
+        <label>
+          Concluída
+          <input
+            type="checkbox"
+            [(ngModel)]="editingTask!.done"
+            name="editDone"
+          />
+        </label>
+        <button (click)="saveEdit()">Guardar</button>
+        <button (click)="editingTask = null">Cancelar</button>
+      </div>
+    </li>
+  </ul>
+</div>
