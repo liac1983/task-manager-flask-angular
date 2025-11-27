@@ -1,0 +1,151 @@
+.tasks-container {
+  width: 700px;
+  max-height: 80vh;
+  padding: 2rem;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.tasks-container h2 {
+  margin-bottom: 0.25rem;
+  font-size: 1.6rem;
+  color: #111827;
+}
+
+.tasks-container h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: #374151;
+}
+
+.tasks-container > button {
+  align-self: flex-end;
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid #e5e7eb;
+  background: #f9fafb;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, transform 0.05s ease;
+}
+
+.tasks-container > button:hover {
+  background: #fee2e2;
+  color: #b91c1c;
+  transform: translateY(-1px);
+}
+
+
+.tasks-container form {
+  display: grid;
+  grid-template-columns: 2fr 3fr auto;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.tasks-container input[type="text"],
+.tasks-container input[placeholder="Title"],
+.tasks-container input[placeholder="Description"] {
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 0.9rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tasks-container input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+}
+
+.tasks-container form button[type="submit"] {
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.05s ease, box-shadow 0.15s ease;
+}
+
+.tasks-container form button[type="submit"]:hover:not(:disabled) {
+  background: #1d4ed8;
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+  transform: translateY(-1px);
+}
+
+.tasks-container form button[type="submit"]:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+
+.tasks-container ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0;
+  margin: 0;
+}
+
+.tasks-container li {
+  padding: 0.75rem 0.9rem;
+  border-radius: 10px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.tasks-container li > div {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tasks-container input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #16a34a;
+  cursor: pointer;
+}
+
+
+.tasks-container li button {
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  border: none;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.05s ease;
+}
+
+.tasks-container li button:nth-of-type(1) {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.tasks-container li button:nth-of-type(1):hover {
+  background: #bae6fd;
+  transform: translateY(-1px);
+}
+
+.tasks-container li button:nth-of-type(2) {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.tasks-container li button:nth-of-type(2):hover {
+  background: #fecaca;
+  transform: translateY(-1px);
+}
