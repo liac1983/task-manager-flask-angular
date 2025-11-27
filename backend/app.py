@@ -23,7 +23,7 @@ def create_app():
     with app.app_context():
         db.create_all()
 
-    # ---------- ROTAS PÚBLICAS ----------
+    # ---------- Public Routes ----------
 
     @app.route("/register", methods=["POST"])
     def register():
@@ -58,7 +58,7 @@ def create_app():
         access_token = create_access_token(identity=user.id)
         return jsonify({"access_token": access_token}), 200
 
-    # ---------- ROTAS PRIVADAS (TASKS) ----------
+    # ---------- Private Routes (TASKS) ----------
 
     @app.route("/tasks", methods=["GET"])
     @jwt_required()

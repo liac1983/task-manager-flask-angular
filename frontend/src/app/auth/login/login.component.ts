@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
@@ -21,7 +22,7 @@ export class LoginComponent {
   onSubmit() {
     this.auth.login(this.username, this.password).subscribe({
       next: () => this.router.navigate(['/tasks']),
-      error: () => (this.error = 'Username ou password inválidos'),
+      error: () => (this.error = 'Invalid username or password'),
     });
   }
 }

@@ -10,14 +10,25 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string) {
-    return this.http.post<{ access_token: string }>(`${this.apiUrl}/login`, {
-      username,
-      password
-    }).pipe(
-      tap(res => {
-        localStorage.setItem(this.tokenKey, res.access_token);
+    return this.http
+      .post<{ access_token: string }>(`${this.apiUrl}/login`, {
+        username,
+        password,
       })
-    );
+      .pipe(
+        tap((res) => {
+          localStorage.setItem(this.tokenKey, res.access_token);
+        })
+      );
+  }
+
+  // 👉 NOVO
+  register(username: string, email: string, password: string) {
+    return this.http.post<{ msg: string }>(`${this.apiUrl}/register`, {
+      username,
+      email,
+      password,
+    });
   }
 
   logout() {
