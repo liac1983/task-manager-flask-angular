@@ -1,17 +1,37 @@
 <div class="login-container">
   <h2>Task Manager - Login</h2>
-  <form (ngSubmit)="onSubmit()">
+
+  <form (ngSubmit)="onSubmit()" #form="ngForm">
     <div>
       <label>Username</label>
-      <input [(ngModel)]="username" name="username" required />
+      <input 
+        [(ngModel)]="username"
+        name="username"
+        required
+        #usernameField="ngModel"
+      />
+      <p *ngIf="usernameField.invalid && usernameField.touched" style="color:red">
+        Username is required.
+      </p>
     </div>
 
     <div>
       <label>Password</label>
-      <input [(ngModel)]="password" name="password" type="password" required />
+      <input 
+        [(ngModel)]="password"
+        name="password"
+        type="password"
+        required
+        #passwordField="ngModel"
+      />
+      <p *ngIf="passwordField.invalid && passwordField.touched" style="color:red">
+        Password is required.
+      </p>
     </div>
 
-    <button type="submit">Login</button>
+    <button type="submit" [disabled]="form.invalid">
+      Login
+    </button>
   </form>
 
   <p *ngIf="error" style="color: red">{{ error }}</p>
@@ -20,5 +40,4 @@
     Don't have an account yet?
     <a routerLink="/register">Sign up here</a>
   </p>
-
 </div>

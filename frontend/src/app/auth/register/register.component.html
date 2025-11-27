@@ -1,18 +1,38 @@
-<p>register works!</p>
 <div class="register-container">
-  <h2>Registo</h2>
+  <h2>Register</h2>
 
-  <form (ngSubmit)="onSubmit()">
+  <form (ngSubmit)="onSubmit()" #form="ngForm">
+
+    <!-- Username -->
     <div>
       <label>Username</label>
-      <input [(ngModel)]="username" name="username" required />
+      <input 
+        [(ngModel)]="username"
+        name="username"
+        required
+        #usernameField="ngModel"
+      />
+      <p *ngIf="usernameField.invalid && usernameField.touched" style="color:red">
+        Username is required.
+      </p>
     </div>
 
+    <!-- Email -->
     <div>
       <label>Email</label>
-      <input [(ngModel)]="email" name="email" type="email" required />
+      <input
+        [(ngModel)]="email"
+        name="email"
+        type="email"
+        required
+        #emailField="ngModel"
+      />
+      <p *ngIf="emailField.invalid && emailField.touched" style="color:red">
+        Please enter a valid email.
+      </p>
     </div>
 
+    <!-- Password -->
     <div>
       <label>Password</label>
       <input
@@ -20,10 +40,17 @@
         name="password"
         type="password"
         required
+        minlength="4"
+        #passwordField="ngModel"
       />
+      <p *ngIf="passwordField.invalid && passwordField.touched" style="color:red">
+        Password must have at least 4 characters.
+      </p>
     </div>
 
-    <button type="submit">Register</button>
+    <button type="submit" [disabled]="form.invalid">
+      Register
+    </button>
   </form>
 
   <p *ngIf="message" style="color: green">{{ message }}</p>
@@ -31,6 +58,6 @@
 
   <p>
     Already have an account?
-    <a routerLink="/login">Sign in here</a>
+    <a routerLink="/login">Log in here</a>
   </p>
 </div>

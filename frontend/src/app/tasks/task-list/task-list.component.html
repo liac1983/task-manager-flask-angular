@@ -3,20 +3,29 @@
   <button (click)="logout()">Logout</button>
 
   <h3>New Task</h3>
-  <form (ngSubmit)="addTask()">
+  <form (ngSubmit)="addTask()" #form="ngForm">
     <input
       [(ngModel)]="newTask.title"
       name="title"
-      placeholder="Título"
+      placeholder="Title"
       required
+      #titleField="ngModel"
     />
+    <p *ngIf="titleField.invalid && titleField.touched" style="color:red">
+      Title is required.
+    </p>
+
     <input
       [(ngModel)]="newTask.description"
       name="description"
-      placeholder="Descrição"
+      placeholder="Description"
     />
-    <button type="submit">Add</button>
+
+    <button type="submit" [disabled]="form.invalid">
+      Add
+    </button>
   </form>
+
 
   <h3>Task List</h3>
   <ul>
