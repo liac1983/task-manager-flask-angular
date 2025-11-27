@@ -52,8 +52,16 @@ export class TaskListComponent implements OnInit {
 
   deleteTask(id: number | undefined) {
     if (id === undefined) return;
+
+    const confirmed = confirm('Are you sure you want to delete this task?');
+
+    if (!confirmed) {
+      return;
+    }
+
     this.taskService.deleteTask(id).subscribe(() => this.loadTasks());
   }
+
 
   logout() {
     this.auth.logout();
