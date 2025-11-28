@@ -11,11 +11,13 @@ import { Router } from '@angular/router';
   imports: [CommonModule, FormsModule],
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.scss'],
+
 })
 export class TaskListComponent implements OnInit {
   tasks: Task[] = [];
   newTask: Task = { title: '', description: '', done: false };
   editingTask: Task | null = null;
+  sortOption: 'title' | 'date' | 'status' = 'date';
 
   constructor(
     private taskService: TaskService,
@@ -67,4 +69,32 @@ export class TaskListComponent implements OnInit {
     this.auth.logout();
     this.router.navigate(['/login']);
   }
+
+  onSortChange() {
+    
+  }
+
+  get sortedTasks(): Task[] {
+
+  const tasksCopy = [...this.tasks];
+
+  return tasksCopy.sort((a, b) => {
+    switch (this.sortOption) {
+      case 'title':
+        return a.title.localeCompare(b.title);
+
+      case 'status':
+       
+        return Number(a.done) - Number(b.done);
+
+      case 'date':
+      default:
+        
+        const idA = a.id ?? 0;
+        const idB = b.id ?? 0;
+        return idB - idA; 
+    }
+  });
+}
+
 }
