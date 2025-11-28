@@ -18,6 +18,7 @@ export class TaskListComponent implements OnInit {
   newTask: Task = { title: '', description: '', done: false };
   editingTask: Task | null = null;
   sortOption: 'title' | 'date' | 'status' = 'date';
+  searchText: string = '';
 
   constructor(
     private taskService: TaskService,
@@ -96,5 +97,20 @@ export class TaskListComponent implements OnInit {
     }
   });
 }
+
+get filteredTasks(): Task[] {
+  const search = this.searchText.trim().toLowerCase();
+
+  if (!search) {
+    return this.tasks; 
+  }
+
+  return this.tasks.filter(t => {
+    const title = t.title?.toLowerCase() ?? '';
+    const desc = t.description?.toLowerCase() ?? '';
+    return title.includes(search) || desc.includes(search);
+  });
+}
+
 
 }
