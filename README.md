@@ -11,6 +11,21 @@ It allows users to:
 
 ---
 
+## Features
+
+- User registration and login with JWT authentication
+- Personal task list (each user only sees their own tasks)
+- Create, edit, delete tasks
+- Mark tasks as completed
+- Task categories: Work, Study, Personal, Other
+- Search tasks by title/description
+- Filter tasks by category
+- Sort tasks by date, title, or status (pending/completed)
+- Creation and completion timestamps for tasks
+- Logout and token-based protection for private routes
+
+---
+
 ## Technologies Used
 
 ### Backend (Python)
@@ -40,6 +55,10 @@ task-manager-flask-angular/
 │   ├── models.py
 │   ├── extensions.py
 │   ├── requirements.txt
+│   ├── tests/
+│   │   ├── conftest.py
+│   │   ├── test_auth.py
+│   │   └── test_tasks.py
 │   └── instance/ (database created automatically)
 │
 └── frontend/
@@ -56,6 +75,15 @@ task-manager-flask-angular/
 ```
 
 ---
+
+## Prerequisites
+
+- Python 3.8+  
+- Node.js 18+ and npm  
+- Angular CLI (optional, but recommended):  
+  ```bash
+  npm install -g @angular/cli
+
 
 ## Running the Backend (Flask)
 
@@ -168,6 +196,47 @@ password: 1234
 ```
 
 Or create an account through the **Register** page.
+
+---
+
+## Running Backend Tests (pytest)
+
+The backend includes automated tests for authentication and task management.
+
+From the project root:
+
+```bash
+cd backend
+python -m venv venv
+source venv/bin/activate         # Linux/WSL/Mac
+# venv\Scripts\activate          # Windows PowerShell
+
+pip install -r requirements.txt
+cd ..
+``` 
+
+Then run the tests from the project root:
+
+```bash
+
+source backend/venv/bin/activate
+python -m pytest
+
+```
+
+## The test suite covers:
+
+- User registration (/register)
+
+- User login (/login)
+
+- Access control for /tasks (requires JWT)
+
+- Task creation and listing
+
+- Task categories and default category handling
+
+- created_at and completed_at fields
 
 ---
 
