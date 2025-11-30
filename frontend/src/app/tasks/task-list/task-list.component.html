@@ -94,6 +94,13 @@
           {{ task.category || 'other' }}
         </span>
 
+        <div style="font-size: 0.75rem; color:#6b7280;">
+          Created: {{ task.created_at | date:'short' }}
+          <span *ngIf="task.done && task.completed_at">
+            • Completed: {{ task.completed_at | date:'short' }}
+          </span>
+        </div>
+
         <button (click)="startEdit(task)">Edit</button>
         <button (click)="deleteTask(task.id!)">Delete</button>
       </div>

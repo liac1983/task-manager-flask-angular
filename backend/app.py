@@ -72,6 +72,8 @@ def create_app():
                 "description": t.description,
                 "done": t.done,
                 "category": t.category, 
+                "created_at": t.created_at.isoformat() if t.created_at else None,
+                "completed_at": t.completed_at.isoformat() if t.completed_at else None,
             } for t in tasks
         ])
 
@@ -109,13 +111,22 @@ def create_app():
         data = request.get_json()
         task.title = data.get("title", task.title)
         task.description = data.get("description", task.description)
-        task.done = data.get("done", task.done)
+       
+        if "done" in data:
+            new_done = data.get("done")
+            if new_done and not task.done:
+              
+                task.completed_at = datetime.utcnow()
+            elif not new_done:
+              
+                task.completed_at = None
+            task.done = new_done
 
         category = data.get("category", task.category)
         allowed_categories = {"work", "study", "personal", "other"}
         if category in allowed_categories:
             task.category = category
-            
+
         db.session.commit()
 
         return jsonify({"msg": "Task updated"})

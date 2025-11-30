@@ -9,6 +9,8 @@ export interface Task {
   description?: string;
   done?: boolean;
   category?: 'work' | 'study' | 'personal' | 'other'; 
+  created_at?: string;  
+  completed_at?: string;
 }
 
 @Injectable({ providedIn: 'root' })

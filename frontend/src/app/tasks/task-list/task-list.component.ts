@@ -98,16 +98,19 @@ export class TaskListComponent implements OnInit {
       switch (this.sortOption) {
         case 'title':
           return a.title.localeCompare(b.title);
+
         case 'status':
-          return Number(a.done) - Number(b.done);
+          return Number(a.done) - Number(b.done); // pending first
+
         case 'date':
         default:
-          const idA = a.id ?? 0;
-          const idB = b.id ?? 0;
-          return idB - idA; // newer first
+          const dateA = a.created_at ? new Date(a.created_at).getTime() : 0;
+          const dateB = b.created_at ? new Date(b.created_at).getTime() : 0;
+          return dateB - dateA; // newer first
       }
     });
   }
+
 
 
 

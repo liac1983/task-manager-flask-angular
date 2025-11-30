@@ -21,5 +21,6 @@ class Task(db.Model):
     description = db.Column(db.Text, nullable=True)
     done = db.Column(db.Boolean, default=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    completed_at = db.Column(db.DateTime, nullable=True)
     category = db.Column(db.String(50), default="personal", nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
