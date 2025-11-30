@@ -70,7 +70,8 @@ def create_app():
                 "id": t.id,
                 "title": t.title,
                 "description": t.description,
-                "done": t.done
+                "done": t.done,
+                "category": t.category, 
             } for t in tasks
         ])
 
@@ -81,11 +82,17 @@ def create_app():
         data = request.get_json()
         title = data.get("title")
         description = data.get("description", "")
+        category = data.get("category", "personal")
 
         if not title:
             return jsonify({"msg": "Title is required"}), 400
 
-        task = Task(title=title, description=description, user_id=current_user_id)
+        allowed_categories = {"work", "study", "personal", "other"}
+        if category not in allowed_categories:
+            category = "other"
+
+
+        task = Task(title=title, description=description, category=category, user_id=current_user_id)
         db.session.add(task)
         db.session.commit()
 
@@ -103,6 +110,12 @@ def create_app():
         task.title = data.get("title", task.title)
         task.description = data.get("description", task.description)
         task.done = data.get("done", task.done)
+
+        category = data.get("category", task.category)
+        allowed_categories = {"work", "study", "personal", "other"}
+        if category in allowed_categories:
+            task.category = category
+            
         db.session.commit()
 
         return jsonify({"msg": "Task updated"})

@@ -21,6 +21,14 @@
       placeholder="Description"
     />
 
+    <!-- Category select -->
+    <select [(ngModel)]="newTask.category" name="category">
+      <option value="work">Work</option>
+      <option value="study">Study</option>
+      <option value="personal">Personal</option>
+      <option value="other">Other</option>
+    </select>
+
     <button type="submit" [disabled]="form.invalid">
       Add
     </button>
@@ -48,12 +56,26 @@
       <option value="title">Title (A–Z)</option>
       <option value="status">Status (pending first)</option>
     </select>
+
+    <!-- Filter by category -->
+    <label for="filter" style="margin-left: 1rem;">Category:</label>
+    <select
+      id="filter"
+      [(ngModel)]="filterCategory"
+      name="filterCategory"
+    >
+      <option value="all">All</option>
+      <option value="work">Work</option>
+      <option value="study">Study</option>
+      <option value="personal">Personal</option>
+      <option value="other">Other</option>
+    </select>
+
   </div>
 
 
   <ul>
-    <li *ngFor="let task of tasks">
-
+    <li *ngFor="let task of sortedTasks">
       <!-- Normal view (not editing) -->
       <div *ngIf="editingTask?.id !== task.id">
         <input
@@ -66,11 +88,17 @@
           {{ task.title }}
         </strong>
         - {{ task.description }}
-        <button (click)="startEdit(task)">Add</button>
+
+        <!-- Badge de categoria -->
+        <span style="font-size: 0.8rem; padding: 0.1rem 0.5rem; border-radius: 999px; background:#e5e7eb;">
+          {{ task.category || 'other' }}
+        </span>
+
+        <button (click)="startEdit(task)">Edit</button>
         <button (click)="deleteTask(task.id!)">Delete</button>
       </div>
 
-     
+      <!-- Edit view -->
       <div *ngIf="editingTask?.id === task.id">
         <input [(ngModel)]="editingTask!.title" name="editTitle" />
         <input
@@ -85,9 +113,19 @@
             name="editDone"
           />
         </label>
+
+        <!-- Edit category -->
+        <select [(ngModel)]="editingTask!.category" name="editCategory">
+          <option value="work">Work</option>
+          <option value="study">Study</option>
+          <option value="personal">Personal</option>
+          <option value="other">Other</option>
+        </select>
+
         <button (click)="saveEdit()">Save</button>
         <button (click)="editingTask = null">Cancel</button>
       </div>
     </li>
   </ul>
+
 </div>

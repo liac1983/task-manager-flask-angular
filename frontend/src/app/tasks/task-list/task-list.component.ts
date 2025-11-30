@@ -19,6 +19,7 @@ export class TaskListComponent implements OnInit {
   editingTask: Task | null = null;
   sortOption: 'title' | 'date' | 'status' = 'date';
   searchText: string = '';
+  filterCategory: 'all' | 'work' | 'study' | 'personal' | 'other' = 'all';  
 
   constructor(
     private taskService: TaskService,
@@ -36,7 +37,7 @@ export class TaskListComponent implements OnInit {
 
   addTask() {
     this.taskService.createTask(this.newTask).subscribe(() => {
-      this.newTask = { title: '', description: '', done: false };
+      this.newTask = { title: '', description: '', done: false, category: 'work'};
       this.loadTasks();
     });
   }
@@ -75,42 +76,39 @@ export class TaskListComponent implements OnInit {
     
   }
 
-  get sortedTasks(): Task[] {
+  get filteredTasks(): Task[] {
+    const search = this.searchText.trim().toLowerCase();
+    return this.tasks.filter((t) => {
+      const matchesSearch =
+        !search ||
+        (t.title?.toLowerCase().includes(search) ?? false) ||
+        (t.description?.toLowerCase().includes(search) ?? false);
 
-  const tasksCopy = [...this.tasks];
+      const matchesCategory =
+        this.filterCategory === 'all' || t.category === this.filterCategory;
 
-  return tasksCopy.sort((a, b) => {
-    switch (this.sortOption) {
-      case 'title':
-        return a.title.localeCompare(b.title);
-
-      case 'status':
-       
-        return Number(a.done) - Number(b.done);
-
-      case 'date':
-      default:
-        
-        const idA = a.id ?? 0;
-        const idB = b.id ?? 0;
-        return idB - idA; 
-    }
-  });
-}
-
-get filteredTasks(): Task[] {
-  const search = this.searchText.trim().toLowerCase();
-
-  if (!search) {
-    return this.tasks; 
+      return matchesSearch && matchesCategory;
+    });
   }
 
-  return this.tasks.filter(t => {
-    const title = t.title?.toLowerCase() ?? '';
-    const desc = t.description?.toLowerCase() ?? '';
-    return title.includes(search) || desc.includes(search);
-  });
-}
+  get sortedTasks(): Task[] {
+    const tasksCopy = [...this.filteredTasks];
+
+    return tasksCopy.sort((a, b) => {
+      switch (this.sortOption) {
+        case 'title':
+          return a.title.localeCompare(b.title);
+        case 'status':
+          return Number(a.done) - Number(b.done);
+        case 'date':
+        default:
+          const idA = a.id ?? 0;
+          const idB = b.id ?? 0;
+          return idB - idA; // newer first
+      }
+    });
+  }
+
 
 
 }
