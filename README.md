@@ -262,6 +262,15 @@ This project was developed as a technical assignment to evaluate:
 
 ---
 
+## Screens Overview
+| Feature | Screenshot |
+|---------|------------|
+| Login | ![](docs/assets/Login.png) |
+| Register | ![](docs/assets/Register.png) |
+| Task List | ![](docs/assets/Tasks.png) |
+
+---
+
 ## Author
 
 **Lara Cunha**  
